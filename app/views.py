@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.models import User
-from .forms import PostForm
-from .models import Post
-
+from .forms import PostForm,ReviewForm
+from .models import Post, Review
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 def welcome(request):
@@ -37,3 +37,18 @@ def upload_image(request):
         'users':users,
     }
     return render(request,'create_post.html',{"form":form})
+
+
+def review(request,id):
+    all_reviews = Review.get_reviews(id)
+    image = get_object_or_404(Post, id=id)
+    form = ReviewForm(request.POST)
+    if form.is_valid():
+            review = form.save(commit=False)
+            review.post = image
+            review.user = request.user.profile
+            review.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = ReviewForm()
+    return render(request, 'reviews.html', {"reviews":all_reviews, "form":form})

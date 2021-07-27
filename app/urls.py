@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
   path('', views.welcome , name='index'),
   path('new/image/', views.upload_image, name='new-image'),
+  path('reviews/<int:id>', views.review, name='reviews'),
 
 ]
 if settings.DEBUG:
