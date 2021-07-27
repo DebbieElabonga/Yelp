@@ -5,7 +5,7 @@ from . import views
 
 urlpatterns = [
   path('', views.welcome , name='index'),
-  
+  path('new/image/', views.upload_image, name='new-image'),
 
 ]
 if settings.DEBUG:
