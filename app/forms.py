@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Review
+from .models import Post, Review,Profile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -16,3 +16,11 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ('review',)
+class UpdateUserProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['profile', 'bio']
+class UpdateUserForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['profile', 'bio']
