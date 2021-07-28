@@ -1,13 +1,14 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from .models import Profile, Post, Review,Follow
 from django.contrib.auth.models import User
-from .forms import PostForm,UpdateUserProfileForm,ReviewForm , UpdateUserForm
+from .forms import PostForm, UserCreationForm, UpdateUserProfileForm,ReviewForm , UpdateUserForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
+from .models import Profile, Post,Review,Follow
 
 # Create your views here.
+@login_required(login_url='login')
 def welcome(request):
     posts = Post.objects.all()
     users = User.objects.exclude(id=request.user.id)
@@ -25,6 +26,22 @@ def welcome(request):
     # users = Profile.objects.all()
     return render(request, 'index.html',context)
 
+def review(request,id):
+    all_reviews = Review.get_comments(id)
+    image = get_object_or_404(Post, id=id)
+    form = ReviewForm(request.POST)
+    if form.is_valid():
+            review = form.save(commit=False)
+            review.post = image
+            review.user = request.user.profile
+            review.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = ReviewForm()
+    return render(request, 'reviews.html', {"reviews":all_reviews, "form":form})
+
+
+@login_required(login_url='login')
 def upload_image(request):
     posts = Post.objects.all()
     users = User.objects.exclude(id=request.user.id)
@@ -42,21 +59,12 @@ def upload_image(request):
     return render(request,'create_post.html',{"form":form})
 
 
-def review(request,id):
-    all_reviews = Review.get_reviews(id)
-    image = get_object_or_404(Post, id=id)
-    form = ReviewForm(request.POST)
-    if form.is_valid():
-            review = form.save(commit=False)
-            review.post = image
-            review.user = request.user.profile
-            review.save()
-            return HttpResponseRedirect(request.path_info)
-    else:
-        form = ReviewForm()
-    return render(request, 'reviews.html', {"reviews":all_reviews, "form":form})
-
-def profile(request):
+@login_required(login_url='login')
+def myprofile(request):
+    try:
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        profile = Profile(user=request.user)
     images = request.user.profile.posts.all()
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
@@ -76,6 +84,7 @@ def profile(request):
     }
     return render(request, 'profile.html', context)
 
+@login_required(login_url='login')
 def user_profile(request, username):
     user_prof = get_object_or_404(User, username=username)
     if request.user == user_prof:
@@ -97,6 +106,7 @@ def user_profile(request, username):
     }
     return render(request, 'user_profile.html', context)
 
+@login_required(login_url="login")
 def searchuser(request):
     if 'username' in request.GET and request.GET["username"]:
         search_name = request.GET.get("username")
@@ -122,4 +132,3 @@ def unfollow(request, pk):
         unfollow= Follow.objects.filter(following=request.user.profile, followers=user_)
         unfollow.delete()
         return redirect('user_profile', user_.user.username)    
-

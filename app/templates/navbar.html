@@ -13,7 +13,7 @@
 <a class="nav-item nav-link active"href ="{% url 'profile'%}"> <img src="{{ profile.image.url }}" style="width: 19px;"
           class="rounded-circle" alt="">{{ user.username }}</a>
           <br>
-    
+          <a class="nav-item nav-link active" href="{% url 'logout' %}">
         <i class="fas fa-sign-out-alt"></i>Logout
       </a>
       
@@ -31,7 +31,8 @@
         </form>
       </div>
       {% else %}
-      
+      <a class="nav-item nav-link active" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i>Login</a>
+      <a class="nav-item nav-link active" href="{% url 'signup' %}"><i class="fas fa-user-plus"></i>Signup</a>
       {% endif %}
     </div>
 

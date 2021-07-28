@@ -1,19 +1,24 @@
 from django.urls import path
+from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-from . import views
-from .views import user_profile, profile,searchuser,follow,unfollow
+from .views import user_profile,signup, myprofile,searchuser,follow,unfollow, review
+
 
 urlpatterns = [
-  path('', views.welcome , name='index'),
-  path('new/image/', views.upload_image, name='new-image'),
-  path('reviews/<int:id>', views.review, name='reviews'),
-  path('profile/', views.profile, name='profile'),
-  path('user_profile/<username>/', user_profile, name='user_profile'),
-  path('profile/', profile, name='profile'),
-  path('search/',searchuser ,name='searchuser'),
-  path('follow/<pk>', follow, name='follow'),
-  path('unfollow/<pk>',unfollow, name='unfollow'),
+
+    path('', views.welcome , name='index'),
+    path('reviews/<int:id>', review, name='reviews'),
+    path('new/image/', views.upload_image, name='new-image'),
+    path('signup/', signup , name='signup'),
+    path('user_profile/<username>/', user_profile, name='user_profile'),
+    path('profile/', myprofile, name='profile'),
+    path('search/',views.searchuser ,name='searchuser'),
+    path('follow/<pk>', follow, name='follow'),
+    path('unfollow/<pk>',unfollow, name='unfollow'),
+    
+	
+
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

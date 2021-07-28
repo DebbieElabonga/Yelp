@@ -1,3 +1,4 @@
+from app.views import review
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -19,11 +20,7 @@ class Profile(models.Model):
         return cls.objects.filter(user__username__icontains=name).all()
     def __str__(self):
         return self.user.username
-@receiver(post_save, sender=User)
-def update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-    instance.profile.save()
+
 
 class Post(models.Model):
     image = models.ImageField(upload_to='posts/')
@@ -81,3 +78,4 @@ class Review(models.Model):
     class Meta:
         ordering = ["-pk"]
 
+    
