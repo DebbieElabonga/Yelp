@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'bootstrap3',
     'widget_tweaks',
+    'star_ratings'
 ]
 
 MIDDLEWARE = [
@@ -80,6 +81,7 @@ WSGI_APPLICATION = 'yelp.wsgi.application'
 
 DATABASES = {
     'default': {
+        
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'yelp',
         'USER': 'hamisi',
@@ -137,3 +139,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_REDIRECT_URL = 'index'
 
 LOGOUT_REDIRECT_URL = 'signup'
+
+STAR_RATINGS_ANONYMOUS = True
+STAR_RATINGS_RERATE = False

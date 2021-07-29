@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load ratings %}
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
@@ -6,7 +7,7 @@
     <div class="card">
             <div class="col-md-3 mt-2">
                 <img src="{{image.user.profile.url}}" class="rounded-circle border ml-3 mt-2  mr-3"
-                     alt="{{image.user.user.username}}" width="35" height="35">
+                     alt="{{image.user.username}}" width="35" height="35">
               
                 <hr style="width:96%">
                 {% for review in reviews %}
@@ -34,6 +35,21 @@
 
 
                 </form>
+                <div class = container>
+                    <div class="row text-center mb-4">
+                      <div class="col-md-4">
+                          <p><strong>Taste</strong></p>
+                          <span>{% ratings image icon_height=20 icon_width=20 %}</span>
+                      </div>
+                      <div class="col-md-4">
+                          <p><strong>Quantities</strong></p>
+                          <span>{% ratings image icon_height=20 icon_width=20 %}</span>
+                      </div>
+                      <div class="col-md-4">
+                          <p><strong>Service</strong></p>
+                          <span>{% ratings image icon_height=20 icon_width=20 %}</span>
+                      </div>
+                  </div>
             </div>
             <div class="col-md-1"></div>
         </div>

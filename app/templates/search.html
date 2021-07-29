@@ -11,17 +11,20 @@
     {% endif %}
   </div>
   
-    {% if searched_profiles %}
+    
     {% for profile in searched_profiles %}
     <div class="container">
       <div class="row">
-    
-       {{profile.user}}
-        print({{profile.user}})
-      
-        <img src="{{profile.profile_photo.url}}" alt="" style="height: 25px;">
+        <div class="card col-md-3 m-4" style="background-color: #DED9E8;">
+          <div class="card-body">
+            <img src="{{profile.user_photo.url}}" alt="" style="height: 25px;">
+            <h5 class="card-title">{{profile.user}}</h5><hr>
+            <p class="card-text text-10"><b>BIO:</b> {{profile.bio}}</p>
+
+          </div>
+        </div>
     {% endfor%}
-    {% endif %}
+  
   </div>
 </div>
   {%endblock%}

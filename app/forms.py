@@ -1,3 +1,4 @@
+from django.db import models
 from django import forms
 from .models import Post,Review,Profile, Review
 from django.contrib.auth.forms import UserCreationForm

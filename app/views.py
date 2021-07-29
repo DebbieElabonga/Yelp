@@ -27,7 +27,7 @@ def welcome(request):
     return render(request, 'index.html',context)
 
 def review(request,id):
-    all_reviews = Review.get_comments(id)
+    all_reviews = Review.get_reviews(id)
     image = get_object_or_404(Post, id=id)
     form = ReviewForm(request.POST)
     if form.is_valid():
@@ -38,7 +38,12 @@ def review(request,id):
             return HttpResponseRedirect(request.path_info)
     else:
         form = ReviewForm()
-    return render(request, 'reviews.html', {"reviews":all_reviews, "form":form})
+        context = {
+            "reviews":all_reviews, 
+            "form":form,
+            "image":image,
+            }
+    return render(request, 'reviews.html', context)
 
 
 @login_required(login_url='login')
@@ -60,7 +65,7 @@ def upload_image(request):
 
 
 @login_required(login_url='login')
-def myprofile(request):
+def profile(request):
     try:
         profile = request.user.profile
     except Profile.DoesNotExist:
@@ -132,3 +137,17 @@ def unfollow(request, pk):
         unfollow= Follow.objects.filter(following=request.user.profile, followers=user_)
         unfollow.delete()
         return redirect('user_profile', user_.user.username)    
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('index')
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})

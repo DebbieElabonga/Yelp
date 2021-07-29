@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import user_profile,signup, myprofile,searchuser,follow,unfollow, review
+from .views import user_profile, profile,searchuser,follow,unfollow, review
 
 
 urlpatterns = [
@@ -10,9 +10,9 @@ urlpatterns = [
     path('', views.welcome , name='index'),
     path('reviews/<int:id>', review, name='reviews'),
     path('new/image/', views.upload_image, name='new-image'),
-    path('signup/', signup , name='signup'),
+    path('signup/', views.signup , name='signup'),
     path('user_profile/<username>/', user_profile, name='user_profile'),
-    path('profile/', myprofile, name='profile'),
+    path('profile/', profile, name='profile'),
     path('search/',views.searchuser ,name='searchuser'),
     path('follow/<pk>', follow, name='follow'),
     path('unfollow/<pk>',unfollow, name='unfollow'),
