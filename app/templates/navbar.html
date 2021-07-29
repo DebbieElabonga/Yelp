@@ -8,7 +8,7 @@
   </button>
       
       {% if user.is_authenticated %}
-      <p> <a href="{%url 'new-image'%}">New Post</a><br></p>
+      <p> <a href="{%url 'new-image'%}">New Menu Item</a><br></p>
       <div class="col-sm-4 col-md-10 navbar-right" style="text-align: right;" >
 <a class="nav-item nav-link active"href ="{% url 'profile'%}"> <img src="{{ profile.image.url }}" style="width: 19px;"
           class="rounded-circle" alt="">{{ user.username }}</a>

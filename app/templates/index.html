@@ -3,7 +3,7 @@
 {% load static %}
 {% block content %}
 <body
-style ="background-image:url(https://images.all-free-download.com/images/graphicthumb/fast_food_background_various_symbols_sketch_repeating_design_6828045.jpg);">
+style ="background-image:url(https://png.pngtree.com/thumb_back/fw800/background/20190221/ourmid/pngtree-blackboard-food-hand-painted-poster-image_26234.jpg);">
 
 
 <div style="float:left; width:20%;">
@@ -15,7 +15,7 @@ style ="background-image:url(https://images.all-free-download.com/images/graphic
 <div class="col-md-7">
 
 {% for post in posts %}
-<li class="jumbotron " style="padding-left:40px ; list-style-type: none; background-color:rgb(255, 255, 255);">                 
+<li class="jumbotron " style="padding-left:40px ; list-style-type: none; background-color:rgb(121, 55, 24);">                 
     <div class="card mb-8 bg-dark text-white">
         <div class="card-body">
  <div class="row p-2 card-title">
@@ -27,9 +27,9 @@ style ="background-image:url(https://images.all-free-download.com/images/graphic
     <br>
     <div class="container">
         <b><p>CAPTION:{{post.caption}}</p></b>
-   <b><i>This post has {{post.review.count}}</i></b>
+   <b><i>For reviews and ratings  {{post.review.count}}</i></b>
     {{review.review}}
-    <a href="{% url 'reviews' post.id %}"><button type="button" class="btn btn-light">view reviews</button></a> <br>
+    <a href="{% url 'reviews' post.id %}"><button type="button" class="btn btn-light">view more</button></a> <br>
 </div>
 </li>
 {% endfor %}
